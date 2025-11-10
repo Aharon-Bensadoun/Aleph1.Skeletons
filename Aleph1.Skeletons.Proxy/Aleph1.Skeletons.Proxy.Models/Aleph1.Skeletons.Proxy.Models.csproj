@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48</TargetFrameworks>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <Version>1.0.0</Version>
     <Authors>Avraham Essoudry</Authors>
     <PackageTags>Aleph1.Skeletons.Proxy Models</PackageTags>
@@ -14,14 +14,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>..\Output\$(Configuration)\Documentation\Aleph1.Skeletons.Proxy.Models.xml</DocumentationFile>
-    <OutputPath>bin\$(Configuration)</OutputPath>
+    <DocumentationFile>..\Output\$(Configuration)\$(TargetFramework)\Documentation\Aleph1.Skeletons.Proxy.Models.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)\$(TargetFramework)</OutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dev|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;DEV</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net48'">
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>

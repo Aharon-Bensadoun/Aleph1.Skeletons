@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net48</TargetFrameworks>
+		<TargetFrameworks>net48;net8.0</TargetFrameworks>
 		<Version>1.0.0</Version>
 		<Authors>TemplateAuthors</Authors>
 		<Company>TemplateCompany</Company>
@@ -14,8 +14,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DocumentationFile>..\Output\$(Configuration)\Documentation\$(MSBuildProjectName).xml</DocumentationFile>
-		<OutputPath>..\Output\$(Configuration)\Modules\</OutputPath>
+		<DocumentationFile>..\Output\$(Configuration)\$(TargetFramework)\Documentation\$(MSBuildProjectName).xml</DocumentationFile>
+		<OutputPath>..\Output\$(Configuration)\$(TargetFramework)\Modules\</OutputPath>
 		<LangVersion>latest</LangVersion>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -27,22 +27,28 @@
 		<DebugSymbols>true</DebugSymbols>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)'=='net48'">
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Aleph1.DI.Contracts" Version="5.0.1" />
 		<PackageReference Include="Aleph1.Logging" Version="7.0.3" />
-		<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Aleph1.Skeletons.WebAPI.Captcha.Contracts\Aleph1.Skeletons.WebAPI.Captcha.Contracts.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Reference Include="System.ComponentModel.Composition" />
+	<ItemGroup Condition="'$(TargetFramework)'!='net48'">
+		<PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
 	</ItemGroup>
 
 </Project>

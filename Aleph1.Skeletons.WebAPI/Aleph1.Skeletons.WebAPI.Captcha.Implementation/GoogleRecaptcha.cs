@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 using Aleph1.Logging;
@@ -29,8 +30,12 @@ namespace Aleph1.Skeletons.WebAPI.Captcha.Implementation
 			using FormUrlEncodedContent content = new(bodyUrlEncoded);
 			HttpResponseMessage response = await httpClient.PostAsync(SettingsManager.CaptchaAPIUrl, content)
 				.ConfigureAwait(false);
-			CaptchaResponse result = await response.Content.ReadAsAsync<CaptchaResponse>()
+			CaptchaResponse? result = await response.Content.ReadFromJsonAsync<CaptchaResponse>()
 				.ConfigureAwait(false);
+			if (result == null)
+			{
+				throw new InvalidOperationException("Captcha verification returned an empty response.");
+			}
 			if (!result.Success)
 			{
 				throw new UnauthorizedAccessException(string.Join(",", result.ErrorCodes));

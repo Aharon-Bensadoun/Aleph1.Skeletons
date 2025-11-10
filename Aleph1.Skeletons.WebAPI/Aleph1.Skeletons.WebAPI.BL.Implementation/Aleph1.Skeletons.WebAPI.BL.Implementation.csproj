@@ -46,6 +46,10 @@
 		<ProjectReference Include="..\Aleph1.Skeletons.WebAPI.Models\Aleph1.Skeletons.WebAPI.Models.csproj" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)'=='net48'">
+		<Reference Include="System.ComponentModel.Composition" />
+	</ItemGroup>
+	
 	<ItemGroup Condition="'$(TargetFramework)'!='net48'">
 		<PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
 	</ItemGroup>

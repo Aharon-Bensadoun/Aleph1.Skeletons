@@ -43,6 +43,10 @@
 		<ProjectReference Include="..\Aleph1.Skeletons.WebAPI.Captcha.Contracts\Aleph1.Skeletons.WebAPI.Captcha.Contracts.csproj" />
 	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)'=='net48'">
+		<Reference Include="System.ComponentModel.Composition" />
+	</ItemGroup>
+	
 	<ItemGroup Condition="'$(TargetFramework)'!='net48'">
 		<PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
 	</ItemGroup>
